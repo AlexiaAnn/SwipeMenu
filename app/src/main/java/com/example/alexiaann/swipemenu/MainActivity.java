@@ -18,6 +18,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 719cb7db107d407759501aeb08843d0646a76a92
 import com.example.alexiaann.swipemenu.swipemenu.view.SwipeMenu;
 
 import java.util.ArrayList;
@@ -77,7 +81,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 719cb7db107d407759501aeb08843d0646a76a92
         ButterKnife.bind(this);
         initTranslate();
         initScale();
