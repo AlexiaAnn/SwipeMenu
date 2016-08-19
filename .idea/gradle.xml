@@ -11,21 +11,8 @@
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
-<<<<<<< HEAD
       </GradleProjectSettings>
     </option>
   </component>
 </project>
 
-=======
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-    </option>
-  </component>
-</project>
->>>>>>> 719cb7db107d407759501aeb08843d0646a76a92

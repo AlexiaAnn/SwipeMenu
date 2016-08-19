@@ -1,49 +1,31 @@
 package com.example.alexiaann.swipemenu;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
-import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.example.alexiaann.swipemenu.Adapter.CustomRecycleViewAdapter;
 import com.example.alexiaann.swipemenu.swipemenu.view.SwipeMenu;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Context mContext;
 
     @Bind(R.id.main_swipemenu)
     SwipeMenu mMainSwipemenu;
-    @Bind(R.id.menu_rg_trans)
-    RadioGroup mRgTrans;
-    @Bind(R.id.menu_cb_scale)
-    CheckBox mCbScale;
-    @Bind(R.id.menu_sb_scale)
-    SeekBar mSbScale;
-    @Bind(R.id.menu_cb_alpha)
-    CheckBox mCbAlpha;
-    @Bind(R.id.menu_sb_alpha)
-    SeekBar mSbAlpha;
-    @Bind(R.id.menu_rg_rotate)
-    RadioGroup mRgRotate;
-    @Bind(R.id.menu_Sb_rotate)
-    SeekBar mSbRotate;
-    @Bind(R.id.main_btn_menu)
-    ImageButton mBtnMenu;
-    @Bind(R.id.content_recyclerView)
-    RecyclerView mContentRecyclerView;
-    @Bind(R.id.cb_pic)
-    CheckBox mCbPic;
-    @Bind(R.id.content_rg_blur)
-    RadioGroup mContentRgBlur;
-
+    @Bind(R.id.recyclerView)
+    RecyclerView recyclerView;
     private int mStyleCode = 11111; //风格代码
     private int mScaleProgress = 0; //起始缩放程度
     private int mAlphaProgress = 0; //起始透明程度
@@ -54,29 +36,54 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     private int mAlphaCode = 1; //透明度动画代码
     private int mRotateCode = 1; //旋转动画代码
 
-
+    private List<String> lists;
+    private CustomRecycleViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.test_layout);
         ButterKnife.bind(this);
         Log.i("log", "sadfasdfasd");
-        initSwipeMenu();
 
+        mContext = this;
+        initSwipeMenu();
+        initRecycle();
     }
 
+    /*
+    * 初始化recyclerView
+    * 数据
+    * 适配器
+    * 显示方式
+    * */
+    private void initRecycle() {
+
+        lists = new ArrayList<String>();
+        for (int i =0;i < 100;i++){
+            lists.add(String.valueOf(i));
+        }
+
+        adapter = new CustomRecycleViewAdapter(mContext,lists);
+        recyclerView.setAdapter(adapter);
+
+//        recyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
+//        recyclerView.setLayoutManager(new GridLayoutManager(mContext,5));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.HORIZONTAL));
+
+//        recyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
+    }
 
 
     /*
     * 初始化SwipeMenu
     * */
-    public void initSwipeMenu(){
+    public void initSwipeMenu() {
         setBlur(3);
-        initTranslate(2);
+        initTranslate(3);
         initScale(2, 50);
-        initAlpha(2,50);
+        initAlpha(2, 50);
         initRotate(3, 50);
         changeStyleCode();
     }
@@ -91,9 +98,9 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     * default...设置模糊并全局沉浸
     * */
 
-    public void setBlur(int styleId){
+    public void setBlur(int styleId) {
         alert(styleId + "");
-        switch (styleId){
+        switch (styleId) {
             case 1:
                 mMainSwipemenu.setBlur(TestActivity.this, R.mipmap.dayu, R.color.colorPrimary, 22f);
                 break;
@@ -142,8 +149,8 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     * 2...有缩放动画
     * 变化范围0~0.8,scaleRange范围0~80
     * */
-    private void initScale(int scaleMode,int scaleRange) {
-        switch (scaleMode){
+    private void initScale(int scaleMode, int scaleRange) {
+        switch (scaleMode) {
             case 1:
                 mScaleCode = 1;
                 break;
@@ -161,9 +168,9 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     * 2...有缩放动画
     * 变化范围0~0.8,alphaRange0~80
     * */
-    private void initAlpha(int alphaMode,int alphaRange) {
+    private void initAlpha(int alphaMode, int alphaRange) {
 
-        switch (alphaMode){
+        switch (alphaMode) {
             case 1:
                 mAlphaCode = 1;
                 break;
@@ -185,7 +192,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     * 6...旋转效果3
     * 变化范围0~0.8,rotateRange~80
     * */
-    private void initRotate(final int rotateMode,int rotateRange) {
+    private void initRotate(final int rotateMode, int rotateRange) {
         switch (rotateMode) {
             case 1:
                 mRotateCode = 1;
@@ -213,6 +220,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         mAngleProgress = rotateRange;
         mMainSwipemenu.setStart3DAngle((int) (rotateRange * 1.0f / 100 * 90));
     }
+
     /*
     * 更新SwipeMenu风格
     * */
@@ -234,12 +242,12 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void alert(String str){
+    public void alert(String str) {
         Toast.makeText(TestActivity.this, str, Toast.LENGTH_SHORT).show();
     }
 
-    public void log(String str){
-        Log.i("log",str);
+    public void log(String str) {
+        Log.i("log", str);
     }
 }
 
