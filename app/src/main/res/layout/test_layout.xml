@@ -10,5 +10,8 @@
 
     <include layout="@layout/left_menu"/>
 
-    <include layout="@layout/right_content"/>
+    <RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </RecyclerView>
 </com.example.alexiaann.swipemenu.swipemenu.view.SwipeMenu>
